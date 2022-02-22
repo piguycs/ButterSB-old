@@ -12,33 +12,34 @@ import net.minecraft.text.LiteralText
 
 @Suppress("UNUSED")
 class LearnKotlin: ModInitializer {
-    private val MOD_ID = "learnkt"
+    private val MODID = "learnkt"
+
+    lateinit var status:String
+
+    val hudinstance = MinecraftClient.getInstance().inGameHud
 
     override fun onInitialize() {
         println("Learning Kotlin on FULL GEAR!!")
         ClientCommandManager.DISPATCHER.register(
             ClientCommandManager.literal("hello").executes { context: CommandContext<FabricClientCommandSource> ->
-                context.source.sendFeedback(LiteralText((MinecraftClient.getInstance().inGameHud as InterfaceInGameHudMixin).returnOverlayMessage().string))
+                status = (hudinstance as InterfaceInGameHudMixin).returnOverlayMessage().string
+                context.source.sendFeedback(LiteralText(status))
+                MinecraftClient.getInstance().inGameHud.chatHud.addMessage(LiteralText("stuff is " + status))
                 1
             }
         )
     }
 
-
+    // events go here lol
     companion object {
         // does things per tick
         fun onTick() {
 
         }
 
-        lateinit var matr: MatrixStack
         // run on world load
         fun onWorldLoad() {
-            matr.push()
-            matr.translate(2.0, 2.0, 2.0)
-            matr.scale(1F, 1F, 0F);
             MinecraftClient.getInstance().inGameHud.chatHud.addMessage(LiteralText("Hello World!!"))
-            MinecraftClient.getInstance().inGameHud.render(matr, 1F)
 
         }
     }
