@@ -1,7 +1,7 @@
 package com.thepiguy.learnkt
 
 import com.thepiguy.learnkt.config.ExampleConfig
-import com.thepiguy.learnkt.config.utils.ParseActionBar
+import com.thepiguy.learnkt.utils.ParseActionBar
 import com.thepiguy.learnkt.mixins.InGameHudMixin
 import com.thepiguy.learnkt.utils.InterfaceInGameHudMixin
 import gg.essential.universal.UMinecraft

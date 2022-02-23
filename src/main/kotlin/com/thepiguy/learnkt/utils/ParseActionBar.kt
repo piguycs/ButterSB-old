@@ -1,4 +1,4 @@
-package com.thepiguy.learnkt.config.utils
+package com.thepiguy.learnkt.utils
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern
