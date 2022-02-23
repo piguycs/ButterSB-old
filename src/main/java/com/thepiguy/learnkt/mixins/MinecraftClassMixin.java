@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftClient.class)
 public class MinecraftClassMixin {
 
-
     @Inject(method="tick", at=@At("HEAD"))
     public void tick(CallbackInfo ci) {
         LearnKotlin.Companion.onTick();

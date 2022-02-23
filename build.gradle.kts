@@ -11,7 +11,10 @@ val modVersion: String by project
 version = modVersion
 val mavenGroup: String by project
 group = mavenGroup
-repositories {}
+repositories {
+    maven("https://repo.sk1er.club/repository/maven-public")
+    maven("https://maven.terraformersmc.com/")
+}
 dependencies {
     val minecraftVersion: String by project
     minecraft("com.mojang:minecraft:$minecraftVersion")
@@ -24,6 +27,13 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     val fabricKotlinVersion: String by project
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion")
+
+    // essential
+    modImplementation("gg.essential:vigilance-1.18.1-fabric:198")
+
+    // modmenu
+    modImplementation("com.terraformersmc:modmenu:3.0.1")
+
 }
 tasks {
     val javaVersion = JavaVersion.VERSION_17
