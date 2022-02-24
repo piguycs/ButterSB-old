@@ -1,7 +1,8 @@
-package com.thepiguy.learnkt.mixins;
+package com.thepiguy.buttersb.mixins;
 
-import com.thepiguy.learnkt.LearnKotlin;
-import com.thepiguy.learnkt.utils.InterfaceInGameHudMixin;
+import com.thepiguy.buttersb.ButterSB;
+import com.thepiguy.buttersb.config.ExampleConfig;
+import com.thepiguy.buttersb.utils.InterfaceInGameHudMixin;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -26,13 +27,23 @@ public class InGameHudMixin implements InterfaceInGameHudMixin {
 
     @Inject(method="render", at=@At("HEAD"))
     public void render(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        LearnKotlin.Companion.onRender(matrices, tickDelta, overlayMessage);
+        ButterSB.Companion.onRender(matrices, overlayMessage);
     }
 
     // hides the default hud
     @ModifyArg(method="render", at=@At(value="INVOKE", target="Lnet/minecraft/client/font/TextRenderer;draw(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/text/Text;FFI)I"), index=1)
     private Text injected(Text x) {
         return new LiteralText("");
+    }
+
+    @ModifyArg(method="renderHealthBar", at=@At(value="INVOKE", target="Lnet/minecraft/util/math/MathHelper;ceil(D)I"), index=0)
+    private double injected(double value) {
+        boolean hideVanillaHealth = ExampleConfig.INSTANCE.getHideVanillaHealth();
+        if (hideVanillaHealth) {
+            return 0;
+        } else {
+            return value;
+        }
     }
 
 }

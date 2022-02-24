@@ -1,4 +1,4 @@
-package com.thepiguy.learnkt.utils;
+package com.thepiguy.buttersb.utils;
 
 import net.minecraft.text.Text;
 

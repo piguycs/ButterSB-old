@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "learnkt",
+  "id": "buttersb",
   "version": "${version}",
   "name": "Butter SB",
   "description": "QOL Utilities for playing Hypixel Skyblock",
@@ -20,11 +20,11 @@
     "main": [
       {
         "adapter": "kotlin",
-        "value": "com.thepiguy.learnkt.LearnKotlin"
+        "value": "com.thepiguy.buttersb.ButterSB"
       }
     ],
     "modmenu": [
-      "com.thepiguy.learnkt.config.ModMenuConfig"
+      "com.thepiguy.buttersb.config.ModMenuConfig"
     ]
   },
   "mixins": [

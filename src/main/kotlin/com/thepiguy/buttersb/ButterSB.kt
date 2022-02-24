@@ -1,28 +1,24 @@
-package com.thepiguy.learnkt
+package com.thepiguy.buttersb
 
-import com.thepiguy.learnkt.config.ExampleConfig
-import com.thepiguy.learnkt.utils.ParseActionBar
-import com.thepiguy.learnkt.mixins.InGameHudMixin
-import com.thepiguy.learnkt.utils.InterfaceInGameHudMixin
+import com.thepiguy.buttersb.config.ExampleConfig
+import com.thepiguy.buttersb.utils.ParseActionBar
+import com.thepiguy.buttersb.utils.InterfaceInGameHudMixin
 import gg.essential.universal.UMinecraft
 import gg.essential.vigilance.Vigilance
 import gg.essential.vigilance.gui.SettingsGui
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gui.hud.InGameHud
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.text.LiteralText
 import net.minecraft.text.Text
 
 
 @Suppress("UNUSED")
-class LearnKotlin: ModInitializer {
-    private val MODID = "learnkt"
+class ButterSB: ModInitializer {
     private val mcinstance = MinecraftClient.getInstance()
 
-    var configGUI: SettingsGui? = null
+    private var configGUI: SettingsGui? = null
 
     override fun onInitialize() {
         // Init log to the console
@@ -63,10 +59,10 @@ class LearnKotlin: ModInitializer {
         private var configGUI : Screen? = null
 
         // for rendering and all that shit
-        var health: String? = null
-        var maxHealth: String? = null
-        var mana: String? = null
-        var maxMana: String? = null
+        private var health: String? = null
+        private var maxHealth: String? = null
+        private var mana: String? = null
+        private var maxMana: String? = null
 
 
         // does things per tick
@@ -81,19 +77,27 @@ class LearnKotlin: ModInitializer {
 
         // run on world load
         fun onWorldLoad() {
-            mcinstance.inGameHud.chatHud.addMessage(LiteralText("Hello World!!"))
+            //mcinstance.inGameHud.chatHud.addMessage(LiteralText("Thank You for using Butter SB\nIt is Skyblock but better with butter performance"))
         }
 
         // render thing, renders stuff each tick
-        fun onRender(matrices: MatrixStack, tickDelta: Float, overlayMessage: Text?) {
+        fun onRender(matrices: MatrixStack, overlayMessage: Text?) {
             if (overlayMessage != null) {
                 // renders the actionbar text (with stats and all)
                 val overlayStuff = ParseActionBar().statsParser(overlayMessage.string)
+
+                val playerHealth = mcinstance.player?.health
+                val playerMaxHealth = mcinstance.player?.maxHealth
+
                 if (overlayStuff != null) {
                     health = overlayStuff[0]
                     maxHealth = overlayStuff[1]
                     mana = overlayStuff[2]
                     maxMana = overlayStuff[3]
+                } else {
+                    if (playerHealth != null && playerMaxHealth != null) {
+                        health = ((playerHealth / playerMaxHealth) * (maxHealth?.toInt() ?: 0)).toInt().toString()
+                    }
                 }
 
                 mcinstance.textRenderer.draw(matrices, "Health: $health/$maxHealth", 2F, 2F, 16733525)

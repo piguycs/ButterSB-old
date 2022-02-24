@@ -1,6 +1,6 @@
-package com.thepiguy.learnkt.mixins;
+package com.thepiguy.buttersb.mixins;
 
-import com.thepiguy.learnkt.LearnKotlin;
+import com.thepiguy.buttersb.ButterSB;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,11 +12,11 @@ public class MinecraftClassMixin {
 
     @Inject(method="tick", at=@At("HEAD"))
     public void tick(CallbackInfo ci) {
-        LearnKotlin.Companion.onTick();
+        ButterSB.Companion.onTick();
     }
 
     @Inject(method="joinWorld", at=@At("HEAD"))
     public void joinWorld(CallbackInfo ci) {
-        LearnKotlin.Companion.onWorldLoad();
+        ButterSB.Companion.onWorldLoad();
     }
 }
