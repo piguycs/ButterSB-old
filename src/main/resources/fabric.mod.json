@@ -5,16 +5,15 @@
   "name": "Butter SB",
   "description": "QOL Utilities for playing Hypixel Skyblock",
   "authors": [
-    "thepiguy",
-    "thepiguy's pollow (for providing moral support)"
+    "ThePiGuy (RocKing1001)"
   ],
   "contact": {
-    "homepage": "https://example.com/",
-    "issues": "https://example.com/",
-    "sources": "https://example.com/"
+    "homepage": "https://github.com/RocKing1001/ButterSB",
+    "issues": "https://github.com/RocKing1001/ButterSB/issues",
+    "sources": "https://github.com/RocKing1001/ButterSB"
   },
   "license": "GNU General Public License version 3 (GPLv3)",
-  "icon": "assets/mod_name/icon.png",
+  "icon": "assets/buttersb/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
