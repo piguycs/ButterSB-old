@@ -1,8 +1,9 @@
 package com.thepiguy.buttersb
 
-import com.thepiguy.buttersb.config.ExampleConfig
-import com.thepiguy.buttersb.utils.ParseActionBar
+import com.mojang.blaze3d.systems.RenderSystem
+import com.thepiguy.buttersb.config.ButterConfig
 import com.thepiguy.buttersb.utils.InterfaceInGameHudMixin
+import com.thepiguy.buttersb.utils.ParseActionBar
 import gg.essential.universal.UMinecraft
 import gg.essential.vigilance.Vigilance
 import gg.essential.vigilance.gui.SettingsGui
@@ -12,6 +13,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
+import net.minecraft.util.Identifier
 
 
 @Suppress("UNUSED")
@@ -26,7 +28,7 @@ class ButterSB: ModInitializer {
 
         // vigilance shit for config
         Vigilance.initialize()
-        ExampleConfig.preload()
+        ButterConfig.preload()
 
 
         // command for doing shit lol
@@ -49,7 +51,7 @@ class ButterSB: ModInitializer {
     // §c120/120❤     §a10§a❈ Defense     §b100/100✎ Mana
 
     private fun openConfig() {
-        configGUI = ExampleConfig.gui()
+        configGUI = ButterConfig.gui()
         Companion.configGUI = configGUI
     }
 
@@ -63,6 +65,11 @@ class ButterSB: ModInitializer {
         private var maxHealth: String? = null
         private var mana: String? = null
         private var maxMana: String? = null
+        // for rendering the bar
+        private var barHealth: Float? = null
+        private var barMana:Float? = null
+        // and texture for the bar
+        private val barTex = Identifier("buttersb", "bars.png")
 
 
         // does things per tick
@@ -82,6 +89,15 @@ class ButterSB: ModInitializer {
 
         // render thing, renders stuff each tick
         fun onRender(matrices: MatrixStack, overlayMessage: Text?) {
+            // coords for ui
+            val height = (mcinstance.inGameHud as InterfaceInGameHudMixin).returnScaledHeight()
+            val width = (mcinstance.inGameHud as InterfaceInGameHudMixin).returnScaledWidth()
+
+            // modified coords for rendering the bars aboce hotbar
+            val barXCoord = width / 2 - 91
+            val barYCord = height - 37
+
+
             if (overlayMessage != null) {
                 // renders the actionbar text (with stats and all)
                 val overlayStuff = ParseActionBar().statsParser(overlayMessage.string)
@@ -100,8 +116,37 @@ class ButterSB: ModInitializer {
                     }
                 }
 
-                mcinstance.textRenderer.draw(matrices, "Health: $health/$maxHealth", 2F, 2F, 16733525)
-                mcinstance.textRenderer.draw(matrices, "Mana: $mana/$maxMana", 2F, 12F, 5636095)
+                barHealth = if (health != null && maxHealth != null) {
+                    ((health!!.toFloat()/ maxHealth!!.toFloat())*75.0f)
+                } else {
+                    0f
+                }
+
+                barMana = if (mana != null && maxMana != null) {
+                    ((mana!!.toFloat()/ maxMana!!.toFloat())*75.0f)
+                } else {
+                    0f
+                }
+
+
+                RenderSystem.setShaderTexture(0, barTex)
+                // health bar
+                mcinstance.inGameHud.drawTexture(matrices, barXCoord, barYCord, 0, 9, 75, 7)
+                mcinstance.inGameHud.drawTexture(matrices, barXCoord, barYCord, 0, 16, barHealth!!.toInt(), 5)
+
+                // mana bar
+                mcinstance.inGameHud.drawTexture(matrices, barXCoord+106, barYCord, 0, 9, 75, 7)
+                mcinstance.inGameHud.drawTexture(matrices, barXCoord+106, barYCord, 0, 23, barMana!!.toInt(), 5)
+
+                // health
+                val healthTxtRender = "$health/$maxHealth"
+                mcinstance.textRenderer.drawWithShadow(matrices, healthTxtRender, barXCoord+(healthTxtRender.length*6/2F), barYCord-8.toFloat(), 16733525)
+
+                // mana
+                val manaTxtRender = "$mana/$maxMana"
+                mcinstance.textRenderer.drawWithShadow(matrices, manaTxtRender, barXCoord+106F+(manaTxtRender.length*6/2F), barYCord-8.toFloat(), 5636095)
+
+
             }
         }
     }
