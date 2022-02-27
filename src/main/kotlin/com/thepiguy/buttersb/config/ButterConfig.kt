@@ -1,6 +1,7 @@
 package com.thepiguy.buttersb.config
 
 
+import gg.essential.universal.UChat
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.*
 import java.io.File
@@ -28,7 +29,19 @@ object ButterConfig : Vigilant(File("./config/butter.toml")) {
         description = "Config the ui",
         category = "GUI"
     )
-    var configGUI = false
+    fun openHudConfig() {
+        UChat.chat("WIP!!")
+    }
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Chat Up height",
+        description = "Move the chat up by the set number of pixels, this is so that it wont obstruct the hud",
+        category = "GUI",
+        min = 0,
+        max = 1000
+    )
+    var chatUpPixels = 10
 
     init {
         initialize()
