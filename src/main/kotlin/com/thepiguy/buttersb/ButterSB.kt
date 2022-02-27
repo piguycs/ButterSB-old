@@ -5,6 +5,7 @@ import com.thepiguy.buttersb.config.ButterConfig
 import com.thepiguy.buttersb.utils.RenderHud
 import net.fabricmc.api.ModInitializer
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
 
@@ -17,7 +18,7 @@ class ButterSB : ModInitializer {
         println("Learning Kotlin on FULL GEAR!!")
 
         // vigilance shit for config
-        config.preload()
+        buttercfg.preload()
 
         // command for doing shit lol
         RegisterCommands().registerCommands()
@@ -26,12 +27,16 @@ class ButterSB : ModInitializer {
     // events go here lol
     companion object {
         private val mc = MinecraftClient.getInstance()
-        val config: ButterConfig = ButterConfig()
+        val buttercfg:ButterConfig = ButterConfig()
+        var config:Screen? = null
 
 
         // does things per tick
         fun onTick() {
-            // uh oh
+            if (config != null) {
+                mc.setScreen(config)
+            }
+            config = null
         }
 
         // run on world load

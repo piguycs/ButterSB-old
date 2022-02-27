@@ -1,12 +1,8 @@
 package com.thepiguy.buttersb.mixins;
 
 import com.thepiguy.buttersb.config.ButterConfig;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
-import net.minecraft.client.network.ClientPlayerEntity;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -15,7 +11,8 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(ChatHud.class)
 public class ChatHudMixin {
     private int getOffset() {
-        return ButterConfig.INSTANCE.getChatUpPixels();
+
+        return ButterConfig.Companion.getChatUpPixels();
     }
 
     @ModifyArg(method = "render", index = 1, at = @At(

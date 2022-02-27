@@ -8,7 +8,7 @@ class RegisterCommands {
     fun registerCommands() {
         ClientCommandManager.DISPATCHER.register(
             ClientCommandManager.literal("buttersb").executes {
-                MinecraftClient.getInstance().setScreen(ButterSB.config.gui())
+                ButterSB.config = ButterSB.buttercfg.gui()
                 1
             }
         )

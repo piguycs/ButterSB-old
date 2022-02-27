@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screen.Screen
 class ModMenuConfig: ModMenuApi {
     override fun getModConfigScreenFactory(): ConfigScreenFactory<*>? {
         return ConfigScreenFactory<Screen> {
-            val configGUI = ButterSB.config.gui()
+            val configGUI = ButterSB.buttercfg.gui()
             configGUI
         }
     }

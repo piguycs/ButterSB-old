@@ -55,7 +55,7 @@ public class InGameHudMixin implements InterfaceInGameHudMixin {
     // hides the vanilla hearts
     @ModifyArg(method="renderHealthBar", at=@At(value="INVOKE", target="Lnet/minecraft/util/math/MathHelper;ceil(D)I"), index=0)
     private double injected(double value) {
-        if (ButterConfig.INSTANCE.getHideVanillaHealth()) {
+        if (ButterConfig.Companion.getHideVanillaHealth()) {
             return 0;
         } else {
             return value;
@@ -65,7 +65,7 @@ public class InGameHudMixin implements InterfaceInGameHudMixin {
     // hides the vanilla hunger
     @ModifyArgs(method="renderStatusBars", at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V"))
     private void injected(Args args) {
-        if (ButterConfig.INSTANCE.getHideVanillaHunger()) {
+        if (ButterConfig.Companion.getHideVanillaHunger()) {
             args.set(5, 0);
         }
     }
