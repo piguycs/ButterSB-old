@@ -1,17 +1,12 @@
 package com.thepiguy.buttersb
 
-import com.mojang.blaze3d.systems.RenderSystem
 import com.thepiguy.buttersb.commands.RegisterCommands
 import com.thepiguy.buttersb.config.ButterConfig
-import com.thepiguy.buttersb.utils.InterfaceInGameHudMixin
-import com.thepiguy.buttersb.utils.ParseActionBar
 import com.thepiguy.buttersb.utils.RenderHud
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 
 
 @Suppress("UNUSED")
@@ -26,7 +21,6 @@ class ButterSB : ModInitializer {
 
         // command for doing shit lol
         RegisterCommands().registerCommands()
-
     }
 
     // events go here lol
