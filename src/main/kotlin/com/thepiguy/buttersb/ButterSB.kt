@@ -4,11 +4,14 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.thepiguy.buttersb.config.ButterConfig
 import com.thepiguy.buttersb.utils.InterfaceInGameHudMixin
 import com.thepiguy.buttersb.utils.ParseActionBar
+import com.thepiguy.buttersb.utils.RenderHud
+import gg.essential.universal.UChat
 import gg.essential.universal.UMinecraft
 import gg.essential.vigilance.Vigilance
 import gg.essential.vigilance.gui.SettingsGui
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager
+import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.util.math.MatrixStack
@@ -78,76 +81,19 @@ class ButterSB: ModInitializer {
                 UMinecraft.getMinecraft().setScreen(configGUI)
             }
             configGUI = null
-
-
         }
 
         // run on world load
         fun onWorldLoad() {
-            //mcinstance.inGameHud.chatHud.addMessage(LiteralText("Thank You for using Butter SB\nIt is Skyblock but better with butter performance"))
+            //UChat.chat("Thank You for using Butter SB")
+
         }
 
+        private val renderhud = RenderHud()
         // render thing, renders stuff each tick
         fun onRender(matrices: MatrixStack, overlayMessage: Text?) {
-            // coords for ui
-            val height = (mcinstance.inGameHud as InterfaceInGameHudMixin).returnScaledHeight()
-            val width = (mcinstance.inGameHud as InterfaceInGameHudMixin).returnScaledWidth()
+            renderhud.renderall(matrices, overlayMessage)
 
-            // modified coords for rendering the bars aboce hotbar
-            val barXCoord = width / 2 - 91
-            val barYCord = height - 37
-
-
-            if (overlayMessage != null) {
-                // renders the actionbar text (with stats and all)
-                val overlayStuff = ParseActionBar().statsParser(overlayMessage.string)
-
-                val playerHealth = mcinstance.player?.health
-                val playerMaxHealth = mcinstance.player?.maxHealth
-
-                if (overlayStuff != null) {
-                    health = overlayStuff[0]
-                    maxHealth = overlayStuff[1]
-                    mana = overlayStuff[2]
-                    maxMana = overlayStuff[3]
-                } else {
-                    if (playerHealth != null && playerMaxHealth != null) {
-                        health = ((playerHealth / playerMaxHealth) * (maxHealth?.toInt() ?: 0)).toInt().toString()
-                    }
-                }
-
-                barHealth = if (health != null && maxHealth != null) {
-                    ((health!!.toFloat()/ maxHealth!!.toFloat())*75.0f)
-                } else {
-                    0f
-                }
-
-                barMana = if (mana != null && maxMana != null) {
-                    ((mana!!.toFloat()/ maxMana!!.toFloat())*75.0f)
-                } else {
-                    0f
-                }
-
-
-                RenderSystem.setShaderTexture(0, barTex)
-                // health bar
-                mcinstance.inGameHud.drawTexture(matrices, barXCoord, barYCord, 0, 9, 75, 7)
-                mcinstance.inGameHud.drawTexture(matrices, barXCoord, barYCord, 0, 16, barHealth!!.toInt(), 5)
-
-                // mana bar
-                mcinstance.inGameHud.drawTexture(matrices, barXCoord+106, barYCord, 0, 9, 75, 7)
-                mcinstance.inGameHud.drawTexture(matrices, barXCoord+106, barYCord, 0, 23, barMana!!.toInt(), 5)
-
-                // health
-                val healthTxtRender = "$health/$maxHealth"
-                mcinstance.textRenderer.drawWithShadow(matrices, healthTxtRender, barXCoord+(healthTxtRender.length*6/2F), barYCord-8.toFloat(), 16733525)
-
-                // mana
-                val manaTxtRender = "$mana/$maxMana"
-                mcinstance.textRenderer.drawWithShadow(matrices, manaTxtRender, barXCoord+106F+(manaTxtRender.length*6/2F), barYCord-8.toFloat(), 5636095)
-
-
-            }
         }
     }
 }
