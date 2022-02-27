@@ -22,7 +22,6 @@ class ParseActionBar {
             val maxMana = normalMatch.group("den")
 
             listOf(health, maxHealth, mana, maxMana)
-
         } else {
             null
         }
