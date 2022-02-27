@@ -2,10 +2,11 @@ package com.thepiguy.buttersb.config
 
 
 import gg.essential.vigilance.Vigilant
-import gg.essential.vigilance.data.*
+import gg.essential.vigilance.data.Property
+import gg.essential.vigilance.data.PropertyType
 import java.io.File
 
-object ButterConfig : Vigilant(File("./config/butter.toml")) {
+class ButterConfig : Vigilant(File("./config/butter.toml")) {
     @Property(
         type = PropertyType.SWITCH,
         name = "Hide vanilla health bar",
@@ -21,14 +22,6 @@ object ButterConfig : Vigilant(File("./config/butter.toml")) {
         category = "GUI"
     )
     var hideVanillaHunger = true
-
-    @Property(
-        type = PropertyType.BUTTON,
-        name = "CONFIG UI",
-        description = "Config the ui",
-        category = "GUI"
-    )
-    var configGUI = false
 
     init {
         initialize()
