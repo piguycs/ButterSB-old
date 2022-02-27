@@ -1,5 +1,7 @@
 package com.thepiguy.buttersb
 
+import com.mojang.blaze3d.systems.RenderSystem
+import com.thepiguy.buttersb.commands.RegisterCommands
 import com.thepiguy.buttersb.config.ButterConfig
 import com.thepiguy.buttersb.utils.InterfaceInGameHudMixin
 import com.thepiguy.buttersb.utils.ParseActionBar
@@ -22,43 +24,15 @@ class ButterSB : ModInitializer {
         // vigilance shit for config
         config.preload()
 
-
         // command for doing shit lol
-        ClientCommandManager.DISPATCHER.register(
-            ClientCommandManager.literal("buttersb").executes {
-                mc.setScreen(config.gui())
-                1
-            }
-        )
-        ClientCommandManager.DISPATCHER.register(
-            ClientCommandManager.literal("testregex").executes {
-                ParseActionBar().statsParser((mc.inGameHud as InterfaceInGameHudMixin).returnOverlayMessage().string)
-                1
-            }
-        )
+        RegisterCommands().registerCommands()
 
     }
-
-    // IMPORTANT lol
-    // §c120/120❤     §a10§a❈ Defense     §b100/100✎ Mana
 
     // events go here lol
     companion object {
         private val mc = MinecraftClient.getInstance()
         val config: ButterConfig = ButterConfig()
-
-        // for rendering and all that shit
-        private var health: String? = null
-        private var maxHealth: String? = null
-        private var mana: String? = null
-        private var maxMana: String? = null
-
-        // for rendering the bar
-        private var barHealth: Float? = null
-        private var barMana: Float? = null
-
-        // and texture for the bar
-        private val barTex = Identifier("buttersb", "bars.png")
 
 
         // does things per tick
@@ -69,10 +43,11 @@ class ButterSB : ModInitializer {
         // run on world load
         fun onWorldLoad() {
             //UChat.chat("Thank You for using Butter SB")
+
         }
 
-        private val renderhud = RenderHud()
         // render thing, renders stuff each tick
+        private val renderhud = RenderHud()
         fun onRender(matrices: MatrixStack, overlayMessage: Text?) {
             renderhud.renderall(matrices, overlayMessage)
         }

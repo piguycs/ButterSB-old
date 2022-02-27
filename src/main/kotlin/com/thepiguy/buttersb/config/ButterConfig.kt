@@ -1,6 +1,7 @@
 package com.thepiguy.buttersb.config
 
 
+import gg.essential.universal.UChat
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
@@ -22,6 +23,26 @@ class ButterConfig : Vigilant(File("./config/butter.toml")) {
         category = "GUI"
     )
     var hideVanillaHunger = true
+
+    @Property(
+        type = PropertyType.BUTTON,
+        name = "CONFIG UI",
+        description = "Config the ui",
+        category = "GUI"
+    )
+    fun openHudConfig() {
+        UChat.chat("WIP!!")
+    }
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Chat Up height",
+        description = "Move the chat up by the set number of pixels, this is so that it wont obstruct the hud",
+        category = "GUI",
+        min = 0,
+        max = 1000
+    )
+    var chatUpPixels = 10
 
     init {
         initialize()
