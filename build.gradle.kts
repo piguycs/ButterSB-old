@@ -14,6 +14,7 @@ group = mavenGroup
 repositories {
     maven("https://repo.sk1er.club/repository/maven-public")
     maven("https://maven.terraformersmc.com/")
+    maven("https://maven.shedaniel.me")
 }
 dependencies {
     val minecraftVersion: String by project
@@ -33,6 +34,10 @@ dependencies {
 
     // modmenu
     modImplementation("com.terraformersmc:modmenu:3.0.1")
+
+    // roughly enough items
+    //modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:VERSION")
+    //modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:VERSION")
 
 }
 tasks {

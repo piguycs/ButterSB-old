@@ -99,6 +99,11 @@ class RenderHud {
                 barYCord - 8.toFloat(),
                 5636095
             )
+
+        }
+
+        if (mc.options.keySprint.isPressed && mc.options.sprintToggled) {
+            mc.textRenderer.drawWithShadow(matrices, "Sprinting", 2F, 2F, 5636095)
         }
     }
 }
