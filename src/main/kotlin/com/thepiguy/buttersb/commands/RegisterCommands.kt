@@ -7,7 +7,13 @@ class RegisterCommands {
     fun registerCommands() {
         ClientCommandManager.DISPATCHER.register(
             ClientCommandManager.literal("buttersb").executes {
-                ButterSB.config = ButterSB.buttercfg.gui()
+                ButterSB.butterConfigScreen = ButterSB.buttercfg.gui()
+                1
+            }
+        )
+        ClientCommandManager.DISPATCHER.register(
+            ClientCommandManager.literal("buttergui").executes {
+                ButterSB.dragableConfigFlag = true
                 1
             }
         )

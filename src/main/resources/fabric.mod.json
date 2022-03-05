@@ -12,7 +12,7 @@
     "issues": "https://github.com/RocKing1001/ButterSB/issues",
     "sources": "https://github.com/RocKing1001/ButterSB"
   },
-  "license": "GNU General Public License version 3 (GPLv3)",
+  "license": "GNU Lesser General Public License version 3 (LGPLv3)",
   "icon": "assets/buttersb/icon.png",
   "environment": "*",
   "entrypoints": {
